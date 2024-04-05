@@ -1,0 +1,52 @@
+publiccodeYmlVersion: '0.2'
+
+name: "plugin-openklacht"
+applicationSuite: 'OpenWebconcept'
+url: 'https://github.com/OpenWebconcept/plugin-openklacht'
+releaseDate: '2024-05-01'
+
+platforms:
+    - 'web'
+
+categories:
+    - 'application-development'
+
+developmentStatus: 'Production'
+
+softwareType: 'softwareAddon'
+
+description:
+    en:
+        genericName: 'Yard | OpenKlacht'
+        shortDescription: 'Through this plugin, OpenKlacht requests can be managed'
+        longDescription: 'Through this plugin, OpenKlacht requests can be managed'
+    nl:
+        genericName: 'Yard | OpenWOO'
+        shortDescription: 'Middels deze plugin kunnen OpenKlacht verzoeken beheerd worden'
+        longDescription: 'Middels deze plugin kunnen OpenKlacht verzoeken beheerd worden'
+
+legal:
+    license: 'EUPL-1.2'
+    repoOwner: 'Yard | Digital Agency'
+
+dependsOn:
+    open:
+		- name: 'extended-cpts'
+		- versionMin: 4.5.2
+		- name: 'cmb2'
+		- versionMin: 2.10.1
+        - name: 'WordPress'
+        - versionMin: 6.0.0
+
+intendedAudience:
+    countries:
+        - nl
+    scope:
+        - government
+
+maintenance:
+    contractors:
+        - name: 'Yard | Digital Agency'
+          website: 'https://www.yard.nl'
+          email: 'owc@yard.nl'
+    type: 'contract'
