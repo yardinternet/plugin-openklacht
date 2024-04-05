@@ -16,7 +16,7 @@ class Autoloader
             $namespace = str_replace('\\', '/', __NAMESPACE__);
             $className = str_replace('\\', '/', $className);
             $class = $baseDir.(empty($namespace) ? '' : $namespace.'/').$className.'.php';
-            $class = str_replace('/Yard/OpenKlacht/', '/OpenKlacht/', $class);
+            $class = str_replace('/OWC/OpenKlacht/', '/OpenKlacht/', $class);
             if (file_exists($class)) {
                 require_once($class);
             }

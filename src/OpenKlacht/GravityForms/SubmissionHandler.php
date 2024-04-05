@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Yard\OpenKlacht;
+namespace OWC\OpenKlacht\GravityForms;
 
 use GF_Field;
 
-class OpenKlachtSubmissionHandler
+class SubmissionHandler
 {
     private array $entry;
     private array $form;
     private const FORMS = [
-        'OpenKlacht' => OpenKlachtInformationAfterSubmit::class,
+        'Formulier OpenKlacht' => AfterSubmit::class,
     ];
 
     public function __construct($entry, $form)

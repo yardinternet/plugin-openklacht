@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Yard\OpenKlacht;
+namespace OWC\OpenKlacht\GravityForms;
 
-abstract class OpenKlachtAbstractAfterSubmit
+abstract class AbstractAfterSubmit
 {
     protected array $form;
     protected string $formTitle;
