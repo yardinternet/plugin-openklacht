@@ -4,69 +4,97 @@ declare(strict_types=1);
 
 namespace OWC\OpenKlacht\GravityForms;
 
+use DateTime;
+use Exception;
+use IntlDateFormatter;
+
 class AfterSubmit extends AbstractAfterSubmit
 {
-    public function handle(): void
-    {
-        $postID = wp_insert_post($this->getArgs(), true);
+	public function handle(): void
+	{
+		$postID = wp_insert_post($this->getArgs(), true);
 
-        if (! $postID) {
-            return;
-        }
-    }
+		if (! $postID) {
+			return;
+		}
+	}
 
-    protected function getArgs(): array
-    {
-        return [
-            'post_title' => sanitize_text_field($this->values['title']),
-            'post_content' => '',
-            'post_status' => 'draft',
-            'post_author' => 1,
-            'post_type' => 'openklacht',
-            'meta_input' => $this->getMetaArgs(),
-        ];
-    }
+	protected function getArgs(): array
+	{
+		return [
+			'post_title' => sanitize_text_field($this->values['title']),
+			'post_content' => '',
+			'post_status' => 'draft',
+			'post_author' => 1,
+			'post_type' => 'openklacht',
+			'meta_input' => $this->getMetaArgs(),
+		];
+	}
 
-    protected function getMetaArgs(): array
-    {
-        $fields = [
-            'reference',
-            'title',
-            'date_received',
-            'year_received',
-            'description',
-            'organization',
-            'function',
-            'findings',
-            'judgement',
-            'conclusion',
-            'judgement_date',
-            'judgement_year',
-        ];
+	protected function getMetaArgs(): array
+	{
+		$fields = [
+			'reference',
+			'title',
+			'date_received',
+			'year_received',
+			'description',
+			'organization',
+			'function',
+			'function_other',
+			'findings',
+			'judgement',
+			'conclusion',
+			'judgement_date',
+			'judgement_year',
+		];
 
-        $metaArgs = collect($fields)->mapWithKeys(function ($field) {
-            if (('date_received' === $field || 'judgement_date' === $field) && isset($this->values[$field])) {
-                $date = new \DateTime($this->values[$field]);
-                $year = $date->format('Y'); // Extract the year
+		$metaArgs = collect($fields)->mapWithKeys(function ($field) {
+			if (in_array($field, ['date_received', 'judgement_date']) && isset($this->values[$field])) {
+				return ['okl_' . $field => $this->formatDateField($field)];
+			}
 
-                if ('date_received' === $field) {
-                    $this->values['year_received'] = $year;
-                } elseif ('judgement_date' === $field) {
-                    $this->values['judgement_year'] = $year;
-                }
+			if ('function' === $field) {
+				return ['okl_' . $field => $this->handleFunctionField()];
+			}
 
-                $formatter = new \IntlDateFormatter('nl_NL', \IntlDateFormatter::LONG, \IntlDateFormatter::NONE);
-                $formattedDate = $formatter->format($date);
+			return ['okl_' . $field => $this->values[$field] ?? ''];
+		})->filter()->toArray();
 
-                return ['okl_' . $field => $formattedDate];
-            }
+		$metaArgs['okl_year_received'] = $this->values['year_received'] ?? '';
+		$metaArgs['okl_judgement_year'] = $this->values['judgement_year'] ?? '';
 
-            return ['okl_' . $field => $this->values[$field] ?? ''];
-        })->filter()->toArray();
+		unset($metaArgs['okl_function_other']);
 
-        $metaArgs['okl_year_received'] = $this->values['year_received'] ?? '';
-        $metaArgs['okl_judgement_year'] = $this->values['judgement_year'] ?? '';
+		return $metaArgs;
+	}
 
-        return $metaArgs;
-    }
+	private function formatDateField(string $field): string
+	{
+		try {
+			$date = new DateTime($this->values[$field]);
+		} catch(Exception $e) {
+			return '';
+		}
+
+		$year = $date->format('Y');
+
+		if ('date_received' === $field) {
+			$this->values['year_received'] = $year;
+		} elseif ('judgement_date' === $field) {
+			$this->values['judgement_year'] = $year;
+		}
+
+		$formatter = new IntlDateFormatter('nl_NL', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+		return $formatter->format($date);
+	}
+
+	private function handleFunctionField(): string
+	{
+		if ('function_other' === $this->values['function'] && ! empty($this->values['function_other'])) {
+			return $this->values['function_other'] ?? '';
+		}
+
+		return $this->values['function'] ?? '';
+	}
 }
