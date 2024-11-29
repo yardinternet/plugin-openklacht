@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'base' => [
+    'openklacht-base' => [
         'id' => '_owc_openklacht_base_settings',
         'title' => __('OpenKlacht settings', 'openklacht'),
         'object_types' => ['options-page'],
