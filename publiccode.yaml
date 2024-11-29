@@ -21,7 +21,7 @@ description:
         shortDescription: 'Through this plugin, OpenKlacht requests can be managed'
         longDescription: 'Through this plugin, OpenKlacht requests can be managed'
     nl:
-        genericName: 'Yard | OpenWOO'
+        genericName: 'Yard | OpenKlacht'
         shortDescription: 'Middels deze plugin kunnen OpenKlacht verzoeken beheerd worden'
         longDescription: 'Middels deze plugin kunnen OpenKlacht verzoeken beheerd worden'
 
