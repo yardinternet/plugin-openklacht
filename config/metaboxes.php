@@ -11,10 +11,9 @@ return [
 	['name' => 'Oordeel', 'id' => 'judgement', 'type' => 'select', 'options' =>
         [
 			'Gegrond' => 'Gegrond',
+			'Deels gegrond, deels ongegrond' => 'Deels gegrond, deels ongegrond',
 			'Ongegrond' => 'Ongegrond',
 			'Niet ontvankelijk' => 'Niet ontvankelijk',
-			'Gedeeltelijk gegrond' => 'Gedeeltelijk gegrond',
-			'Gedeeltelijk ongegrond' => 'Gedeeltelijk ongegrond',
 		],
     ],
     ['name' => 'Conclusie', 'id' => 'conclusion', 'type' => 'textarea'],
