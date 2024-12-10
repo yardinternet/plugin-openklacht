@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Plugin Name:       Yard | OpenKlacht
  * Plugin URI:        https://www.yard.nl/
  * Description:       OpenKlacht implementation
- * Version:           0.0.1
+ * Version:           1.0.1
  * Author:            Yard | Digital Agency
  * Author URI:        https://www.yard.nl/
  * License:           EUPL-1.2
