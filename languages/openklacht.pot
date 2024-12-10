@@ -37,3 +37,91 @@ msgstr ""
 #: src/OpenKlacht/PostType/MetaboxFields.php:20
 msgid "Gegevens"
 msgstr ""
+
+#: config/metaboxes.php:4
+msgid "Kenmerk"
+msgstr ""
+
+#: config/metaboxes.php:5
+msgid "Onderwerp"
+msgstr ""
+
+#: config/metaboxes.php:6
+msgid "Ontvangstdatum"
+msgstr ""
+
+#: config/metaboxes.php:7
+msgid "Betrokken organisatie onderdeel"
+msgstr ""
+
+#: config/metaboxes.php:8
+msgid "Functiebenaming ambtenaar over wie geklaagd is"
+msgstr ""
+
+#: config/metaboxes.php:9
+msgid "Omschrijving"
+msgstr ""
+
+#: config/metaboxes.php:§0
+msgid "Bevinding"
+msgstr ""
+
+#: config/metaboxes.php:11
+msgid "Oordeel"
+msgstr ""
+
+#: config/metaboxes.php:13
+msgid "Gegrond"
+msgstr ""
+
+#: config/metaboxes.php:14
+msgid "Deels gegrond, deels ongegrond"
+msgstr ""
+
+#: config/metaboxes.php:15
+msgid "Ongegrond"
+msgstr ""
+
+#: config/metaboxes.php:16
+msgid "Niet ontvankelijk"
+msgstr ""
+
+#: config/metaboxes.php:19
+msgid "Conclusie"
+msgstr ""
+
+#: config/metaboxes.php:20
+msgid "Dagtekening van het oordeel"
+msgstr ""
+
+#: config/settings_pages.php:6
+msgid "OpenKlacht instellingen"
+msgstr ""
+
+#: config/settings_pages.php:10
+msgid "Algemeen"
+msgstr ""
+
+#: config/settings_pages.php:15
+msgid "Portaal URL"
+msgstr ""
+
+#: config/settings_pages.php:16
+msgid "URL inclusief http(s)://"
+msgstr ""
+
+#: config/settings_pages.php:21
+msgid "Portaal OpenKlacht item slug"
+msgstr ""
+
+#: config/settings_pages.php:22
+msgid "URL voor OpenKlacht items in het portaal, bijv. 'onderwerp'"
+msgstr ""
+
+#: config/settings_pages.php:27
+msgid "Portaal URL (API)"
+msgstr ""
+
+#: config/settings_pages.php:28
+msgid "Gebruik het portaal URL in de REST API."
+msgstr ""

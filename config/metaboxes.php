@@ -1,21 +1,21 @@
 <?php
 
 return [
-    ['name' => 'Kenmerk', 'id' => 'reference', 'type' => 'text'],
-    ['name' => 'Onderwerp', 'id' => 'title', 'type' => 'text'],
-    ['name' => 'Ontvangstdatum', 'id' => 'date_received', 'type' => 'text'],
-    ['name' => 'Betrokken organisatie onderdeel', 'id' => 'organization', 'type' => 'text'],
-    ['name' => 'Functiebenaming ambtenaar over wie geklaagd is', 'id' => 'function', 'type' => 'text'],
-    ['name' => 'Omschrijving', 'id' => 'description', 'type' => 'wysiwyg'],
-    ['name' => 'Bevinding', 'id' => 'findings', 'type' => 'wysiwyg'],
-    ['name' => 'Oordeel', 'id' => 'judgement', 'type' => 'select', 'options' =>
+    ['name' => __('Kenmerk', 'openklacht'), 'id' => 'reference', 'type' => 'text'],
+    ['name' => __('Onderwerp', 'openklacht'), 'id' => 'title', 'type' => 'text'],
+    ['name' => __('Ontvangstdatum', 'openklacht'), 'id' => 'date_received', 'type' => 'text'],
+    ['name' => __('Betrokken organisatie onderdeel', 'openklacht'), 'id' => 'organization', 'type' => 'text'],
+    ['name' => __('Functiebenaming ambtenaar over wie geklaagd is', 'openklacht'), 'id' => 'function', 'type' => 'text'],
+    ['name' => __('Omschrijving', 'openklacht'), 'id' => 'description', 'type' => 'wysiwyg'],
+    ['name' => __('Bevinding', 'openklacht'), 'id' => 'findings', 'type' => 'wysiwyg'],
+    ['name' => __('Oordeel', 'openklacht'), 'id' => 'judgement', 'type' => 'select', 'options' =>
         [
-            'Gegrond' => 'Gegrond',
-            'Deels gegrond, deels ongegrond' => 'Deels gegrond, deels ongegrond',
-            'Ongegrond' => 'Ongegrond',
-            'Niet ontvankelijk' => 'Niet ontvankelijk',
+            'Gegrond' => __('Gegrond', 'openklacht'),
+            'Deels gegrond, deels ongegrond' => __('Deels gegrond, deels ongegrond', 'openklacht'),
+            'Ongegrond' => __('Ongegrond', 'openklacht'),
+            'Niet ontvankelijk' => __('Niet ontvankelijk', 'openklacht'),
         ],
     ],
-    ['name' => 'Conclusie', 'id' => 'conclusion', 'type' => 'wysiwyg'],
-    ['name' => 'Dagtekening van het oordeel', 'id' => 'judgement_date', 'type' => 'text'],
+    ['name' => __('Conclusie', 'openklacht'), 'id' => 'conclusion', 'type' => 'wysiwyg'],
+    ['name' => __('Dagtekening van het oordeel', 'openklacht'), 'id' => 'judgement_date', 'type' => 'text'],
 ];

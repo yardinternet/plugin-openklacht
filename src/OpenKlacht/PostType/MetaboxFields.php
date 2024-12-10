@@ -28,7 +28,7 @@ class MetaboxFields
 
         foreach ($this->fields as $field) {
             $fieldData = [
-                'name' => __($field['name'], 'openklacht'),
+                'name' => $field['name'],
                 'id' => sprintf('%s_%s', OWC_OPENKLACHT_PREFIX, $field['id']),
                 'type' => $field['type'],
             ];
