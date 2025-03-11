@@ -24,7 +24,7 @@ class AdminServiceProvider extends ServiceProvider
             return $link;
         }
 
-        return sprintf('%s/%s/%s', untrailingslashit($this->settings->getPortalURL()), untrailingslashit($this->settings->getPortalItemSlug()), ($leavename ? '%postname%' : $post->post_name));
+        return sprintf('%s/%s/%s/', untrailingslashit($this->settings->getPortalURL()), untrailingslashit($this->settings->getPortalItemSlug()), ($leavename ? '%postname%' : $post->post_name));
     }
 
     /**
