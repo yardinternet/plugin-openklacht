@@ -22,14 +22,13 @@ if (! defined('WPINC')) {
     die;
 }
 
-/**
- * Manual loaded file: the autoloader.
- */
-require_once __DIR__ . '/autoloader.php';
-$autoloader = new Autoloader();
-
-if (file_exists(__DIR__ . '/vendor/autoload.php')) {
-    require_once(__DIR__ . '/vendor/autoload.php');
+if (!class_exists(OWC\OpenKlacht\OpenKlachtServiceProvider::class)) {
+    if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+        require_once __DIR__ . '/vendor/autoload.php';
+    } else {
+        require_once __DIR__ . '/autoloader.php';
+        $autoloader = new Autoloader();
+    }
 }
 
 define('OWC_OPENKLACHT_ROOT_PATH', __DIR__);
@@ -43,5 +42,7 @@ define('OWC_OPENKLACHT_PREFIX', 'okl');
  * and wp_loaded action hooks.
  */
 add_action('plugins_loaded', function () {
-    (new OWC\OpenKlacht\OpenKlachtServiceProvider())->register();
+	add_action('after_setup_theme', function () {
+    	(new OWC\OpenKlacht\OpenKlachtServiceProvider())->register();
+	});
 }, 10);
