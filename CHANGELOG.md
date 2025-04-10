@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version 1.0.3
+
+- Fix: namespace psr-4 autoload in composer.json
+- Fix: only require autoload.php if not already loaded
+
 ## Version 1.0.2
 
 - Fix: missing trailing slash in links to post
