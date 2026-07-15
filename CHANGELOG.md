@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 1.0.4
+
+- Chore: update deps
+
 ## Version 1.0.3
 
 - Fix: namespace psr-4 autoload in composer.json
