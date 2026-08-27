@@ -1,16 +1,17 @@
-# Copyright (C) 2024 Yard | Digital Agency
+# Copyright (C) 2026 Yard | Digital Agency
 # This file is distributed under the EUPL-1.2.
 msgid ""
 msgstr ""
-"Project-Id-Version: Yard | OpenKlacht 0.0.1\n"
+"Project-Id-Version: Yard | OpenKlacht 2.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/openklacht\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-07-09T13:08:34+00:00\n"
+"POT-Creation-Date: 2026-08-27T09:57:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: openklacht\n"
 
 #. Plugin Name of the plugin
@@ -34,94 +35,110 @@ msgstr ""
 msgid "Yard | Digital Agency"
 msgstr ""
 
-#: src/OpenKlacht/PostType/MetaboxFields.php:20
-msgid "Gegevens"
-msgstr ""
-
-#: config/metaboxes.php:4
+#: config/metaboxes.php:15
 msgid "Kenmerk"
 msgstr ""
 
-#: config/metaboxes.php:5
+#: config/metaboxes.php:16
 msgid "Onderwerp"
 msgstr ""
 
-#: config/metaboxes.php:6
+#: config/metaboxes.php:18
 msgid "Ontvangstdatum"
 msgstr ""
 
-#: config/metaboxes.php:7
+#: config/metaboxes.php:24
+msgid "Ontvangstdatum (verouderd)"
+msgstr ""
+
+#: config/metaboxes.php:27
+msgid "Verouderd veld, alleen nog in gebruik voor bestaande klachten. Vul hierboven de Ontvangstdatum in."
+msgstr ""
+
+#: config/metaboxes.php:29
 msgid "Betrokken organisatie onderdeel"
 msgstr ""
 
-#: config/metaboxes.php:8
+#: config/metaboxes.php:30
 msgid "Functiebenaming ambtenaar over wie geklaagd is"
 msgstr ""
 
-#: config/metaboxes.php:9
+#: config/metaboxes.php:31
 msgid "Omschrijving"
 msgstr ""
 
-#: config/metaboxes.php:§0
+#: config/metaboxes.php:32
 msgid "Bevinding"
 msgstr ""
 
-#: config/metaboxes.php:11
+#: config/metaboxes.php:33
 msgid "Oordeel"
 msgstr ""
 
-#: config/metaboxes.php:13
+#: config/metaboxes.php:35
 msgid "Gegrond"
 msgstr ""
 
-#: config/metaboxes.php:14
+#: config/metaboxes.php:36
 msgid "Deels gegrond, deels ongegrond"
 msgstr ""
 
-#: config/metaboxes.php:15
+#: config/metaboxes.php:37
 msgid "Ongegrond"
 msgstr ""
 
-#: config/metaboxes.php:16
+#: config/metaboxes.php:38
 msgid "Niet ontvankelijk"
 msgstr ""
 
-#: config/metaboxes.php:19
+#: config/metaboxes.php:41
 msgid "Conclusie"
 msgstr ""
 
-#: config/metaboxes.php:20
+#: config/metaboxes.php:43
 msgid "Dagtekening van het oordeel"
 msgstr ""
 
-#: config/settings_pages.php:6
+#: config/metaboxes.php:49
+msgid "Dagtekening van het oordeel (verouderd)"
+msgstr ""
+
+#: config/metaboxes.php:52
+msgid "Verouderd veld, alleen nog in gebruik voor bestaande klachten. Vul hierboven de Dagtekening van het oordeel in."
+msgstr ""
+
+#: config/settings_pages.php:8
 msgid "OpenKlacht instellingen"
 msgstr ""
 
-#: config/settings_pages.php:10
+#: config/settings_pages.php:12
 msgid "Algemeen"
 msgstr ""
 
-#: config/settings_pages.php:15
+#: config/settings_pages.php:17
 msgid "Portaal URL"
 msgstr ""
 
-#: config/settings_pages.php:16
+#: config/settings_pages.php:18
 msgid "URL inclusief http(s)://"
 msgstr ""
 
-#: config/settings_pages.php:21
+#: config/settings_pages.php:23
 msgid "Portaal OpenKlacht item slug"
 msgstr ""
 
-#: config/settings_pages.php:22
+#: config/settings_pages.php:24
 msgid "URL voor OpenKlacht items in het portaal, bijv. 'onderwerp'"
 msgstr ""
 
-#: config/settings_pages.php:27
+#: config/settings_pages.php:29
 msgid "Portaal URL (API)"
 msgstr ""
 
-#: config/settings_pages.php:28
+#: config/settings_pages.php:30
 msgid "Gebruik het portaal URL in de REST API."
+msgstr ""
+
+#: src/OpenKlacht/PostType/MetaboxFields.php:17
+msgid "Gegevens"
 msgstr ""

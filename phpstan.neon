@@ -1,0 +1,19 @@
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+    level: 5
+    phpVersion: 80200
+    paths:
+        - src
+        - config
+        - openklacht.php
+    bootstrapFiles:
+        - tests/phpstan/bootstrap.php
+    scanFiles:
+        - autoloader.php
+        - vendor/php-stubs/gravity-forms-stubs/gravity-forms-stubs.php
+    scanDirectories:
+        # CMB2 is a require-dev wordpress-plugin, so composer/installers puts its
+        # real source here rather than in vendor/.
+        - wp-content/plugins/cmb2/includes

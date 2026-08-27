@@ -8,13 +8,13 @@ use OWC\OpenKlacht\Foundation\ServiceProvider;
 
 class GravityFormsServiceProvider extends ServiceProvider
 {
-    public function register(): void
-    {
-        add_action('gform_after_submission', [$this, 'handleFormSubmission'], 10, 2);
-    }
+	public function register(): void
+	{
+		add_action('gform_after_submission', $this->handleFormSubmission(...), 10, 2);
+	}
 
-    public function handleFormSubmission($entry, $form): void
-    {
-        SubmissionHandler::make($entry, $form)->handle();
-    }
+	public function handleFormSubmission(array $entry, array $form): void
+	{
+		SubmissionHandler::make($entry, $form)->handle();
+	}
 }
