@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OWC\OpenKlacht\Foundation;
 
 /**
@@ -7,166 +9,154 @@ namespace OWC\OpenKlacht\Foundation;
  */
 class Config
 {
-    /**
-     * Directory where config files are located.
-     */
-    protected string $path;
+	/**
+	 * Array with names of protected nodes in the config-items.
+	 */
+	protected array $protectedNodes = [];
 
-    /**
-     * Array with names of protected nodes in the config-items.
-     */
-    protected array $protectedNodes = [];
+	/**
+	 * Config repository constructor.
+	 *
+	 * Boot the configuration files and get all the files from the
+	 * config directory and add them to the config array.
+	 *
+	 * @param string               $path  Directory where config files are located.
+	 * @param array<string, mixed> $items Array with all the config values.
+	 */
+	public function __construct(
+		protected string $path,
+		protected array $items = []
+	) {
+	}
 
-    /**
-     * Array with all the config values.
-     */
-    protected array $items = [];
+	/**
+	 * Boot up the configuration repository.
+	 */
+	public function boot(): void
+	{
+		$this->scanDirectory($this->getPath());
+	}
 
-    /**
-     * Config repository constructor.
-     *
-     * Boot the configuration files and get all the files from the
-     * config directory and add them to the config array.
-     */
-    public function __construct($path, array $items = [])
-    {
-        $this->items = $items;
-        $this->path = $path;
-    }
+	/**
+	 * Retrieve a specific config value from the configuration repository.
+	 */
+	public function get(?string $setting): mixed
+	{
+		if (! $setting) {
+			return $this->all();
+		}
 
-    /**
-     * Boot up the configuration repository.
-     */
-    public function boot(): void
-    {
-        $this->scanDirectory($this->getPath());
-    }
+		$parts = explode('.', $setting);
 
-    /**
-     * Retrieve a specific config value from the configuration repository.
-     *
-     * @param $setting
-     *
-     * @return array|mixed
-     */
-    public function get($setting)
-    {
-        if (! $setting) {
-            return $this->all();
-        }
+		$current = $this->items;
 
-        $parts = explode('.', $setting);
+		foreach ($parts as $part) {
+			$current = $current[$part];
+		}
 
-        $current = $this->items;
+		return $current;
+	}
 
-        foreach ($parts as $part) {
-            $current = $current[$part];
-        }
+	/**
+	 * Set a given configuration value.
+	 *
+	 * @param array<string, mixed>|string $key
+	 */
+	public function set(array|string $key, mixed $value = null): void
+	{
+		$keys = is_array($key) ? $key : [ $key => $value ];
 
-        return $current;
-    }
+		$tempItems = &$this->items;
 
-    /**
-     * Set a given configuration value.
-     *
-     * @param  array|string $key
-     * @param  mixed        $value
-     */
-    public function set($key, $value = null): void
-    {
-        $keys = is_array($key) ? $key : [ $key => $value ];
+		foreach ($keys as $key => $value) {
+			if (in_array($key, $this->protectedNodes)) {
+				continue;
+			}
 
-        $tempItems = &$this->items;
+			$parts = explode('.', $key);
+			while (1 < count($parts)) {
+				$part = array_shift($parts);
+				// If the key doesn't exist at this depth, we will just create an empty array
+				// to hold the next value, allowing us to create the arrays to hold final
+				// values at the correct depth. Then we'll keep digging into the array.
+				if (! isset($tempItems[$part]) || ! is_array($tempItems[$part])) {
+					$tempItems[$part] = [];
+				}
+				$tempItems = &$tempItems[$part];
+			}
 
-        foreach ($keys as $key => $value) {
-            if (in_array($key, $this->protectedNodes)) {
-                continue;
-            }
+			$tempItems[array_shift($parts)] = $value;
+		}
+	}
 
-            $parts = explode('.', $key);
-            while (1 < count($parts)) {
-                $part = array_shift($parts);
-                // If the key doesn't exist at this depth, we will just create an empty array
-                // to hold the next value, allowing us to create the arrays to hold final
-                // values at the correct depth. Then we'll keep digging into the array.
-                if (! isset($tempItems[$part]) || ! is_array($tempItems[$part])) {
-                    $tempItems[$part] = [];
-                }
-                $tempItems = &$tempItems[$part];
-            }
+	/**
+	 * Return all config values.
+	 */
+	public function all(): array
+	{
+		return $this->items;
+	}
 
-            $tempItems[array_shift($parts)] = $value;
-        }
-    }
+	/**
+	 * Get the path where the files will be fetched from.
+	 */
+	public function getPath(): string
+	{
+		return $this->path;
+	}
 
-    /**
-     * Return all config values.
-     */
-    public function all(): array
-    {
-        return $this->items;
-    }
+	/**
+	 * Sets the path where the config files are fetched from.
+	 */
+	public function setPath(string $path): void
+	{
+		$this->path = $path;
+	}
 
-    /**
-     * Get the path where the files will be fetched from.
-     */
-    public function getPath(): string
-    {
-        return $this->path;
-    }
+	/**
+	 * Some nodes must not be changed by outside interference.
+	 */
+	public function setProtectedNodes(array $nodes = []): void
+	{
+		$this->protectedNodes = $nodes;
+	}
 
-    /**
-     * Sets the path where the config files are fetched from.
-     */
-    public function setPath(string $path)
-    {
-        $this->path = $path;
-    }
+	/**
+	 * Scan a given directory for certain files.
+	 */
+	private function scanDirectory(string $path): void
+	{
+		$files = glob($path.'/*', GLOB_NOSORT);
 
-    /**
-     * Some nodes must not be changed by outside interference.
-     */
-    public function setProtectedNodes(array $nodes = [])
-    {
-        $this->protectedNodes = $nodes;
-    }
+		foreach ($files as $file) {
+			$fileType = filetype($file);
 
-    /**
-     * Scan a given directory for certain files.
-     */
-    private function scanDirectory(string $path)
-    {
-        $files = glob($path.'/*', GLOB_NOSORT);
+			if ('dir' == $fileType) {
+				$this->scanDirectory($file);
+			} else {
+				$name = str_replace('.php', '', basename($file));
+				$value = include $file;
 
-        foreach ($files as $file) {
-            $fileType = filetype($file);
+				// If its in the first directory just add the file.
+				if ($path == $this->path) {
+					$this->items[$name] = $value;
 
-            if ('dir' == $fileType) {
-                $this->scanDirectory($file);
-            } else {
-                $name = str_replace('.php', '', basename($file));
-                $value = include $file;
+					continue;
+				}
 
-                // If its in the first directory just add the file.
-                if ($path == $this->path) {
-                    $this->items[$name] = $value;
+				// Get the path from the starting path.
+				$path = str_replace($this->path.'/', '', $path);
 
-                    continue;
-                }
+				// Build an array from the path.
+				$items = [];
+				$items[$name] = $value;
+				foreach (array_reverse(explode('/', $path)) as $key) {
+					$items = [ $key => $items ];
+				}
 
-                // Get the path from the starting path.
-                $path = str_replace($this->path.'/', '', $path);
-
-                // Build an array from the path.
-                $items = [];
-                $items[$name] = $value;
-                foreach (array_reverse(explode('/', $path)) as $key) {
-                    $items = [ $key => $items ];
-                }
-
-                // Merge it recursively into items
-                $this->items = array_merge_recursive($this->items, $items);
-            }
-        }
-    }
+				// Merge it recursively into items
+				$this->items = array_merge_recursive($this->items, $items);
+			}
+		}
+	}
 }

@@ -6,7 +6,10 @@ declare(strict_types=1);
  * Plugin Name:       Yard | OpenKlacht
  * Plugin URI:        https://www.yard.nl/
  * Description:       OpenKlacht implementation
- * Version:           1.0.4
+ * Version:           2.0.0
+ * Requires at least: 6.5
+ * Requires PHP:      8.2
+ * Requires Plugins:  cmb2
  * Author:            Yard | Digital Agency
  * Author URI:        https://www.yard.nl/
  * License:           EUPL-1.2
@@ -19,16 +22,16 @@ declare(strict_types=1);
  * If this file is called directly, abort.
  */
 if (! defined('WPINC')) {
-    die;
+	die;
 }
 
-if (!class_exists(OWC\OpenKlacht\OpenKlachtServiceProvider::class)) {
-    if (file_exists(__DIR__ . '/vendor/autoload.php')) {
-        require_once __DIR__ . '/vendor/autoload.php';
-    } else {
-        require_once __DIR__ . '/autoloader.php';
-        $autoloader = new Autoloader();
-    }
+if (! class_exists(OWC\OpenKlacht\OpenKlachtServiceProvider::class)) {
+	if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+		require_once __DIR__ . '/vendor/autoload.php';
+	} else {
+		require_once __DIR__ . '/autoloader.php';
+		$autoloader = new Autoloader();
+	}
 }
 
 define('OWC_OPENKLACHT_ROOT_PATH', __DIR__);
@@ -43,6 +46,6 @@ define('OWC_OPENKLACHT_PREFIX', 'okl');
  */
 add_action('plugins_loaded', function () {
 	add_action('after_setup_theme', function () {
-    	(new OWC\OpenKlacht\OpenKlachtServiceProvider())->register();
+		(new OWC\OpenKlacht\OpenKlachtServiceProvider())->register();
 	});
 }, 10);

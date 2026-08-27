@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## Version 2.0.0
+
+- Breaking: PHP 8.2 is now the minimum supported version.
+- Breaking: WordPress 6.5 is now the minimum supported version, required for the `Requires Plugins` header.
+- Chore: CMB2 is declared through the `Requires Plugins` plugin header instead of as a Composer runtime dependency, since it is installed as a separate WordPress plugin. It moves to `require-dev` for local development.
+- Feature: `okl_date_received` and `okl_judgement_date` are superseded by `okl_date_received_date` and `okl_judgement_date_date`, which render a datepicker and store a fixed `d-m-Y` value instead of a locale-dependent display string.
+- Feature: add `okl_judgement_date_sortable` to the Elasticsearch document, alongside the existing `okl_date_received_sortable`.
+- Deprecated: `okl_date_received` and `okl_judgement_date` remain registered, writable and exposed via the REST API, and are still used as a fallback when the new fields are empty. No existing data is modified.
+- Fix: the Elasticsearch sortable dates are derived from the new fixed-format fields, so they no longer depend on the site locale at submission time.
+- Chore: metabox field definitions are passed to CMB2 in full, so field types can carry their own options.
+- Chore: add a PHPStan configuration, repair the php-cs-fixer file finder, and modernise the codebase for PHP 8.2.
+
 ## Version 1.0.4
 
 - Chore: update deps

@@ -31,12 +31,14 @@ legal:
 
 dependsOn:
     open:
-		- name: 'extended-cpts'
-		- versionMin: 4.5.2
-		- name: 'cmb2'
-		- versionMin: 2.10.1
+        - name: 'extended-cpts'
+          versionMin: '4.5.2'
+        - name: 'cmb2'
+          versionMin: '2.10.1'
         - name: 'WordPress'
-        - versionMin: 6.0.0
+          versionMin: '6.5.0'
+        - name: 'PHP'
+          versionMin: '8.2'
 
 intendedAudience:
     countries:

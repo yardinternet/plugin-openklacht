@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace OWC\OpenKlacht\GravityForms;
 
+/**
+ * @phpstan-consistent-constructor
+ */
 abstract class AbstractAfterSubmit
 {
-    protected array $form;
-    protected string $formTitle;
-    protected array $values;
-    protected array $entry;
+	protected string $formTitle;
 
-    public function __construct(array $form, array $values, array $entry)
-    {
-        $this->form = $form;
-        $this->formTitle = $form['title'];
-        $this->values = $values;
-        $this->entry = $entry;
-    }
+	public function __construct(
+		protected readonly array $form,
+		protected array $values,
+		protected readonly array $entry
+	) {
+		$this->formTitle = $form['title'];
+	}
 
-    public static function make(array $form, array $values, array $entry): self
-    {
-        return new static($form, $values, $entry);
-    }
+	public static function make(array $form, array $values, array $entry): static
+	{
+		return new static($form, $values, $entry);
+	}
 
-    abstract public function handle(): void;
+	abstract public function handle(): void;
 }
