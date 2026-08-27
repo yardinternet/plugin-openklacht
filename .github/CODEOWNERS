@@ -1,13 +1,5 @@
-# Lines starting with '#' are comments.
+# These owners are the default owners for everything in the repo.
+* @yardinternet/wordpress-backend
 
-# Each line is a file pattern followed by one or more owners.
-
-# These owners will be the default owners for everything in the repo.
-
-- @yardinternet/wordpress-backend
-
-# Don't automatically assign reviewers on PRs that only modify these files.
-
-# As they have no owner listed, these files are not owned by anyone.
-
+# Listed with no owner so PRs that only touch them don't request a review.
 composer.lock

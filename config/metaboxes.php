@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use OWC\OpenKlacht\Foundation\Meta;
+
 return [
 	['name' => __('Kenmerk', 'openklacht'), 'id' => 'reference', 'type' => 'text'],
 	['name' => __('Onderwerp', 'openklacht'), 'id' => 'title', 'type' => 'text'],
@@ -9,7 +11,7 @@ return [
 		'name' => __('Ontvangstdatum', 'openklacht'),
 		'id' => 'date_received_date',
 		'type' => 'text_date',
-		'date_format' => 'd-m-Y',
+		'date_format' => Meta::DATE_FORMAT,
 	],
 	[
 		'name' => __('Ontvangstdatum (verouderd)', 'openklacht'),
@@ -34,7 +36,7 @@ return [
 		'name' => __('Dagtekening van het oordeel', 'openklacht'),
 		'id' => 'judgement_date_date',
 		'type' => 'text_date',
-		'date_format' => 'd-m-Y',
+		'date_format' => Meta::DATE_FORMAT,
 	],
 	[
 		'name' => __('Dagtekening van het oordeel (verouderd)', 'openklacht'),

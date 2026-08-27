@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OWC\OpenKlacht\RestAPI;
 
+use OWC\OpenKlacht\Foundation\Meta;
 use OWC\OpenKlacht\Foundation\ServiceProvider;
 use WP_Post;
 
@@ -12,8 +13,11 @@ class RestAPIServiceProvider extends ServiceProvider
 	public function register(): void
 	{
 		$this->hooks();
-		$this->registerPortalURLField();
-		$this->registerExtraRestFields();
+
+		add_action('rest_api_init', function (): void {
+			$this->registerPortalURLField();
+			$this->registerExtraRestFields();
+		});
 	}
 
 	public function hooks(): void
@@ -51,30 +55,26 @@ class RestAPIServiceProvider extends ServiceProvider
 			return;
 		}
 
+		// Share one callback for all fields to avoid creating a new closure for each field.
+		$getValue = $this->getFieldValue(...);
+
 		foreach ($fields as $field) {
 			if (empty($field['id'])) {
 				continue;
 			}
 
-			$this->registerField($field);
+			register_rest_field(['openklacht'], Meta::key($field['id']), [
+				'get_callback' => $getValue,
+			]);
 		}
 	}
 
-	protected function registerField(array $field): void
-	{
-		register_rest_field(['openklacht'], sprintf('%s_%s', OWC_OPENKLACHT_PREFIX, $field['id']), [
-			'get_callback' => fn ($object) => $this->getFieldValue($object, $field),
-		]);
-	}
-
 	/**
-	 * @param array<string, mixed> $object REST response of the post being prepared.
-	 * @param array<string, mixed> $field  Field definition from the metaboxes config.
+	 * @param array<string, mixed> $object   REST response of the post being prepared.
+	 * @param string               $metaKey  Name of the REST field being resolved.
 	 */
-	public function getFieldValue(array $object, array $field): mixed
+	public function getFieldValue(array $object, string $metaKey): mixed
 	{
-		$metaKey = sprintf('%s_%s', OWC_OPENKLACHT_PREFIX, $field['id']);
-
 		return get_post_meta($object['id'], $metaKey, true);
 	}
 }

@@ -29,12 +29,12 @@
     }
   ],
   "require": {
-    "php": "^8.2",
-    "ext-intl": "*"
+    "php": "^8.2"
   },
   "require-dev": {
     "10up/wp_mock": "^1.1",
     "php-stubs/gravity-forms-stubs": "^2.9",
+    "phpunit/phpunit": "^9.6",
     "szepeviktor/phpstan-wordpress": "^2.0",
     "wp-plugin/cmb2": "^2.12",
     "yard/php-cs-fixer-rules": "^1.0"
@@ -44,11 +44,16 @@
       "OWC\\OpenKlacht\\": "./src/OpenKlacht"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "OWC\\OpenKlacht\\Tests\\": "./tests"
+    }
+  },
   "scripts": {
     "format": "./vendor/bin/php-cs-fixer fix",
     "phpstan": "./vendor/bin/phpstan analyse --no-progress --memory-limit 1G",
-    "unit": "clear && ./vendor/bin/phpunit --colors=always",
-    "unit-coverage": "clear && XDEBUG_MODE=coverage ./vendor/bin/phpunit --stderr --colors=always --coverage-html ./tests/logs/coverage",
+    "unit": "./vendor/bin/phpunit --colors=always",
+    "unit-coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --stderr --colors=always --coverage-html ./tests/logs/coverage",
     "test": [
       "@unit"
     ]

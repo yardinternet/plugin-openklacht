@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OWC\OpenKlacht\Settings;
 
-use CMB2;
+use OWC\OpenKlacht\Foundation\Meta;
 use OWC\OpenKlacht\Foundation\ServiceProvider;
 
 class SettingsServiceProvider extends ServiceProvider
@@ -42,21 +42,6 @@ class SettingsServiceProvider extends ServiceProvider
 			return;
 		}
 
-		$this->registerSettingsPageFields($optionsPage, $fields);
-	}
-
-	protected function registerSettingsPageFields(CMB2 $optionsPage, array $fields): void
-	{
-		foreach ($fields as $field) {
-			if (! is_array($field)) {
-				continue;
-			}
-
-			if (isset($field['id'])) {
-				$field['id'] = sprintf('%s_%s', OWC_OPENKLACHT_PREFIX, $field['id']);
-			}
-
-			$optionsPage->add_field($field);
-		}
+		Meta::addFields($optionsPage, $fields);
 	}
 }
