@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace OWC\OpenKlacht\GravityForms;
 
-use DateTime;
+use DateTimeImmutable;
 use Exception;
+use OWC\OpenKlacht\Foundation\Meta;
 
 class AfterSubmit extends AbstractAfterSubmit
 {
 	public function handle(): void
 	{
-		$postID = wp_insert_post($this->getArgs(), true);
-
-		if (! $postID) {
-			return;
-		}
+		wp_insert_post($this->getArgs());
 	}
 
 	protected function getArgs(): array
@@ -36,63 +33,69 @@ class AfterSubmit extends AbstractAfterSubmit
 			'reference',
 			'title',
 			'date_received',
-			'year_received',
 			'description',
 			'organization',
 			'function',
-			'function_other',
 			'findings',
 			'judgement',
 			'conclusion',
 			'judgement_date',
-			'judgement_year',
 		];
 
 		$metaArgs = [];
 		foreach ($fields as $field) {
-			if (in_array($field, ['date_received', 'judgement_date']) && isset($this->values[$field])) {
-				$metaArgs['okl_' . $field] = $this->formatDateField($field);
+			if (isset(Meta::DATE_FIELDS[$field])) {
+				// Yields the date in both representations plus the derived year.
+				$metaArgs += $this->dateMetaArgs($field);
 			} elseif ('function' === $field) {
-				$metaArgs['okl_' . $field] = $this->handleFunctionField();
+				$metaArgs[Meta::key($field)] = $this->handleFunctionField();
 			} else {
-				$metaArgs['okl_' . $field] = $this->values[$field] ?? '';
+				$metaArgs[Meta::key($field)] = $this->values[$field] ?? '';
 			}
 		}
 
 		$metaArgs = array_filter($metaArgs);
 
-		$metaArgs['okl_year_received'] = $this->values['year_received'] ?? '';
-		$metaArgs['okl_judgement_year'] = $this->values['judgement_year'] ?? '';
-
-		unset($metaArgs['okl_function_other']);
-
-		return $metaArgs;
+		// Unioned after array_filter so the year keys persist even when empty: the
+		// Elasticsearch year facet relies on them being present. A year derived from
+		// a parsed date is already in $metaArgs and takes precedence over a
+		// form-supplied one.
+		return $metaArgs + [
+			Meta::key('year_received') => $this->values['year_received'] ?? '',
+			Meta::key('judgement_year') => $this->values['judgement_year'] ?? '',
+		];
 	}
 
 	/**
-	 * Converts a field value to a DateTime, formats it, and sets the year field for 'date_received' or 'judgement_date'.
+	 * Stores a submitted date as a DATE_FORMAT value, plus the year derived from it.
+	 *
+	 * @return array<string, string>
 	 */
-	private function formatDateField(string $field): string
+	private function dateMetaArgs(string $field): array
+	{
+		$date = $this->parseDateField($field);
+
+		if (null === $date) {
+			return [];
+		}
+
+		return [
+			Meta::key($field . '_date') => $date->format(Meta::DATE_FORMAT),
+			Meta::key(Meta::DATE_FIELDS[$field]) => $date->format('Y'),
+		];
+	}
+
+	private function parseDateField(string $field): ?DateTimeImmutable
 	{
 		if (empty($this->values[$field])) {
-			return '';
+			return null;
 		}
 
 		try {
-			$date = new DateTime($this->values[$field]);
-		} catch(Exception $e) {
-			return '';
+			return new DateTimeImmutable($this->values[$field]);
+		} catch (Exception) {
+			return null;
 		}
-
-		$year = $date->format('Y');
-
-		if ('date_received' === $field) {
-			$this->values['year_received'] = $year;
-		} elseif ('judgement_date' === $field) {
-			$this->values['judgement_year'] = $year;
-		}
-
-		return date_i18n('j F Y', $date->getTimestamp());
 	}
 
 	/**
@@ -101,8 +104,10 @@ class AfterSubmit extends AbstractAfterSubmit
 	 */
 	private function handleFunctionField(): string
 	{
-		if ('function_other' === $this->values['function'] && ! empty($this->values['function_other'])) {
-			return $this->values['function_other'] ?? '';
+		// Guarded because getEnteredValues() array_filters the submission, so an empty
+		// field is absent rather than an empty string.
+		if ('function_other' === ($this->values['function'] ?? '') && ! empty($this->values['function_other'])) {
+			return $this->values['function_other'];
 		}
 
 		return $this->values['function'] ?? '';

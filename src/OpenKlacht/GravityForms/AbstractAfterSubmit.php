@@ -9,14 +9,11 @@ namespace OWC\OpenKlacht\GravityForms;
  */
 abstract class AbstractAfterSubmit
 {
-	protected string $formTitle;
-
 	public function __construct(
 		protected readonly array $form,
-		protected array $values,
+		protected readonly array $values,
 		protected readonly array $entry
 	) {
-		$this->formTitle = $form['title'];
 	}
 
 	public static function make(array $form, array $values, array $entry): static
