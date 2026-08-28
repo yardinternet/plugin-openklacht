@@ -145,12 +145,12 @@ class Config
 				}
 
 				// Get the path from the starting path.
-				$path = str_replace($this->path.'/', '', $path);
+				$relativePath = str_replace($this->path.'/', '', $path);
 
 				// Build an array from the path.
 				$items = [];
 				$items[$name] = $value;
-				foreach (array_reverse(explode('/', $path)) as $key) {
+				foreach (array_reverse(explode('/', $relativePath)) as $key) {
 					$items = [ $key => $items ];
 				}
 
