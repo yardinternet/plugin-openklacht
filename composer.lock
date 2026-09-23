@@ -5171,15 +5171,15 @@
         },
         {
             "name": "wp-plugin/cmb2",
-            "version": "2.12.0",
+            "version": "2.13.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/cmb2/",
-                "reference": "tags/2.12.0"
+                "reference": "tags/2.13.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/cmb2.2.12.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/cmb2.2.13.0.zip"
             },
             "require": {
                 "composer/installers": "~1.0|~2.0"
@@ -5198,7 +5198,7 @@
                 "issues": "https://wordpress.org/support/plugin/cmb2",
                 "source": "https://plugins.svn.wordpress.org/cmb2"
             },
-            "time": "2026-05-31T02:46:28+00:00"
+            "time": "2026-09-21T01:26:37+00:00"
         },
         {
             "name": "yard/php-cs-fixer-rules",
